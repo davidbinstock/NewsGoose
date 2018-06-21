@@ -4,9 +4,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const exphbs = require("express-handlebars");
-const mongoose = require("mongoose");
-const request = require("request");
-const cheerio = require("cheerio");
 
 // ==============================================================================================================
 // CONFIGURE EXPRESS APP
@@ -31,10 +28,7 @@ app.use(bodyParser.json());
 // ==============================================================================================================
 // ROUTES
 // ==============================================================================================================
-
-app.get("/", function(request, response){
-    response.send("Hello!!! Welcome to NewsGoose!! So glad you could make it!")
-})
+require("./routes/routes")(app);
 
 // ==============================================================================================================
 // START THE SERVER
