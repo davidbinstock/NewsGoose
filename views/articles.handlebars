@@ -1,5 +1,6 @@
+
 <div class="container">
-    <ul class="nav nav-tabs">
+        <ul class="nav nav-tabs">
         <li class="nav-item">
             <a class="nav-link active" href="/">Home</a>
         </li>
@@ -21,10 +22,24 @@
             NewsGoose
         </h1>
         <p class="lead">Welcome to NewsGoose! Read cool onion articles and keep notes!</p>
-        <hr class="my-4">
-        <p>click here to scrape for articles</p>
-        <p class="lead">
-            <a class="btn btn-primary btn-lg" href="#" role="button">Scrape</a>
-        </p>
     </div>
+
+    <h2>The Articles Page</h2>
+    <ul>
+        {{#each articles}}
+        <div class="card" style="width: 36rem;">
+            <img class="card-img-top" src={{imageLink}} alt="Card image cap">
+            <div class="card-body">
+                <a href={{link}}>
+                    <h5 class="card-title">{{headline}}</h5>
+                </a>
+                <p class="card-text">{{snippet}}</p>
+                <a href="#" class="btn btn-primary">Make a Note</a>
+            </div>
+        </div>
+        {{/each}}
+    </ul>
+
+
+
 </div>

@@ -16,6 +16,9 @@ const ArticleSchema = new Schema({
         type: String,
         required: true
     },
+    imageLink: {
+        type: String
+    },
     snippet: {
         type: String
     },
