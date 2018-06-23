@@ -7,7 +7,7 @@ const request = require("request");
 const cheerio = require("cheerio");
 const path = require("path");
 
-// const db = require("./models")
+const db = require("../models")
 
 // ==============================================================================================================
 // CONNECT TO MONGO DB VIA MONGOOSE
@@ -37,7 +37,7 @@ module.exports = function(app){
             $("article").each(function(i, element){
                 let result = {}
 
-                result.id = $(this)
+                result.articleId = $(this)
                     .data("id");
                 result.headline = $(this)
                     .children("header").children("h1").children("a")
@@ -52,8 +52,14 @@ module.exports = function(app){
                     .children("div.item__content").children("div.excerpt").children("p")
                     .text();
 
-                console.log(result);
-            })
+                // console.log(result);
+
+                db.Article.create(result)
+                    .then(dbArticle => console.log(dbArticle))
+                    .catch(error =>console.log(error))
+            });
+
+            res.send("Scraping is complete")
         })
     })
 
