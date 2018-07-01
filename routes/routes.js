@@ -68,7 +68,10 @@ module.exports = function(app){
                 db.Article.findOneAndUpdate(
                     {articleId: result.articleId},
                     result,
-                    {upsert: true}
+                    {
+                        upsert: true,
+                        setDefaultsOnInsert: true
+                    }
                 )
                 // db.Article.create(result)
                     .then(dbArticle => console.log(dbArticle))
@@ -90,6 +93,80 @@ module.exports = function(app){
             }
             res.render("articles", viewObject)
         })
+    });
+    // ---------------------------------------
+    // get list of saved articles
+    // ---------------------------------------
+    app.get("/saved", function(req,res){
+        db.Article.find({saved:true})
+        .then(dbResults => {
+            const viewObject = {
+                articles: dbResults
+            }
+            res.render("articles", viewObject)
+        })
+    });
+
+    
+    // ---------------------------------------
+    // put - save article
+    // ---------------------------------------
+    app.put("/articles/:action/:id", function(req,res){
+        let updateObj = {}; 
+        switch(req.params.action){
+            case "save":
+                updateObj = { $set: {saved : true}};
+                break;
+            case "unsave":
+                updateObj = { $set: {saved : false}}
+                break;
+        }
+        
+        db.Article.findOneAndUpdate(
+            { _id: req.params.id},
+            updateObj,
+            { new: true}
+        )
+            .then(dbArticle => {
+                console.log(dbArticle);
+                res.json(dbArticle);
+            })
+            .catch(error => {
+                console.log(error);
+                res.send(dbArticle);
+            })
+    });
+
+    // ---------------------------------------
+    // get specific article and retrieve notes
+    // ---------------------------------------
+    app.get("/seenotes/:id", function(req,res){
+        db.Article.findOne({_id:req.params.id})
+        .populate("notes")
+        .then(dbResult => {
+            const viewObject = {article: dbResult};
+            console.log(viewObject);
+            res.render("notepage", viewObject)
+        })
+    });
+
+
+    // ---------------------------------------
+    // post for savings notes
+    // ---------------------------------------
+    app.get("/savenote", function(req,res){
+        console.log(req.body)
+        // db.Note.create(
+        //     {articleId: result.articleId},
+        //     result,
+        //     {
+        //         upsert: true,
+        //         setDefaultsOnInsert: true
+        //     }
+        // )
+        // // db.Article.create(result)
+        //     .then(dbArticle => console.log(dbArticle))
+        //     .catch(error =>console.log(error))
     });
 
 }

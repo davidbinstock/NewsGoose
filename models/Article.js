@@ -22,12 +22,18 @@ const ArticleSchema = new Schema({
     snippet: {
         type: String
     },
+    saved: {
+        type: Boolean,
+        required: true,
+        default: false
+    },
     notes: [
         {
           type: Schema.Types.ObjectId,
           ref: "Note"
         }
-      ]
+    ]
+
 });
 
 // create a mongoose article "model" and export it

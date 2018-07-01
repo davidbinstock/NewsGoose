@@ -1,44 +1,44 @@
-
 <div class="container">
         <ul class="nav nav-tabs">
         <li class="nav-item">
-            <a class="nav-link active" href="/">Home</a>
+            <a class="nav-link js-tab" href="/">Home</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="/articles">Articles</a>
+            <a class="nav-link js-tab" href="/articles">Articles</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link disabled" href="#">Disabled</a>
+            <a class="nav-link js-tab" href="/saved">Saved Articles</a>
         </li>
     </ul>
 
     <div class="jumbotron">
         
         <h1 class="display-4">
-            <img src="./assets/images/transparentGoose2.png" alt="goose" style="width: 10%; height:10%">
+            <img src="/assets/images/transparentGoose2.png" alt="goose" style="width: 10%; height:10%">
             NewsGoose
         </h1>
         <p class="lead">Welcome to NewsGoose! Read cool onion articles and keep notes!</p>
     </div>
 
     <h2>The Articles Page</h2>
-    <ul>
         {{#each articles}}
         <div class="card" style="width: 36rem;">
-            <img class="card-img-top" src={{imageLink}} alt="Card image cap">
+            <img class="card-img-top" src={{#if imageLink}}{{imageLink}}{{else}}""{{/if}} alt="Card image cap">
             <div class="card-body">
                 <a href={{link}}>
                     <h5 class="card-title">{{headline}}</h5>
                 </a>
                 <p class="card-text">{{snippet}}</p>
-                <a href="#" class="btn btn-primary">Make a Note</a>
+                {{#if saved}}
+                <div class="btn btn-warning btn-sm disabled"><img height="10px"src="/assets/images/checkmark_Bold_Brush_Black_T.png" alt="">Article Saved </div>
+                <button class="btn btn-secondary btn-sm js-saveUnsave" data-action="unsave" data-aid={{articleId}} data-dbid={{_id}}>Unsave</button>
+                <button class="btn btn-primary btn-sm js-note" data-action="addNote" data-aid={{articleId}} data-dbid={{_id}}>See Notes</button>
+                {{else}}
+                <button class="btn btn-primary btn-sm js-saveUnsave" data-action="save" data-aid={{articleId}} data-dbid={{_id}}>Save Article</button>
+                {{/if}}
             </div>
         </div>
         {{/each}}
-    </ul>
 
 
 

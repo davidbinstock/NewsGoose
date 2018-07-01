@@ -1,0 +1,70 @@
+<div class="container">
+
+    <ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a class="nav-link js-tab" href="/">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link js-tab" href="/articles">Articles</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link js-tab" href="/saved">Saved Articles</a>
+        </li>
+    </ul>
+
+    <div class="jumbotron">
+        
+        <h1 class="display-4">
+            <img src="/assets/images/transparentGoose2.png" alt="goose" style="width: 10%; height:10%">
+            NewsGoose
+        </h1>
+        <p class="lead">Welcome to NewsGoose! Read cool onion articles and keep notes!</p>
+    </div>
+
+    <h2>Article Notes</h2>
+        {{#with article}}
+        <div class="card" style="width: 36rem;">
+            <img class="card-img-top" src={{#if imageLink}}{{imageLink}}{{else}}""{{/if}} alt="Card image cap">
+            <div class="card-body">
+                <a href={{link}}>
+                    <h5 class="card-title">{{headline}}</h5>
+                </a>
+                <p class="card-text">{{snippet}}</p>
+                <button class="btn btn-success btn-sm js-addNote" data-action="addNote" data-aid={{articleId}} data-dbid={{_id}}>Add Note</button>
+            </div>
+        </div>
+        {{/with}}
+
+    {{!-- Enter Note Modal --}}
+    <div class="modal fade" id="add-note-modal" tabindex="-1" role="dialog" aria-labelledby="addNoteLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addNoteLabel">New Note</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                    <div class="form-group">
+                        <label for="note-title" class="col-form-label">Title:</label>
+                        <input type="text" class="form-control" id="note-title">
+                    </div>
+                    <div class="form-group">
+                        <label for="note-content" class="col-form-label">Content:</label>
+                        <textarea class="form-control" id="note-content"></textarea>
+                    </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary" id="save-note-button">Save Note</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+</div>
